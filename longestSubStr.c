@@ -9,15 +9,21 @@ int lengthOfLongestSubstring(char * s){
         int hash[127] = {0};
         len = 0;
         int j = i;
+        printf("i = %d\n",i);
         for (; j < strlen(s); ++j)
         {
             if (hash[s[j]] == 0)
             {
-                hash[s[i]] = 1;
+                printf("%c : ", s[j]);
+                printf("%d\n", hash[s[j]]);
+                hash[s[j]] = 1;
                 len++;
             }
             else
+            {
+                j--;
                 break;
+            }
         }
         longest = len > longest ? len : longest;
         i = j;
