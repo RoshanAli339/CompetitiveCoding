@@ -2,33 +2,26 @@
 #include <string.h>
 #include <stdlib.h>
 
+
 int lengthOfLongestSubstring(char * s){
-    int i = 0, longest = 0, len = 0;
-    while (i < strlen(s))
+    int hash[] = {[0 ... 127] = -1};    
+    int l = 0, r = 0, len = 0;
+    for (; r < strlen(s); ++r)
     {
-        int hash[127] = {0};
-        len = 0;
-        int j = i;
-        printf("i = %d\n",i);
-        for (; j < strlen(s); ++j)
+        if (hash[s[r]] == -1)
         {
-            if (hash[s[j]] == 0)
-            {
-                printf("%c : ", s[j]);
-                printf("%d\n", hash[s[j]]);
-                hash[s[j]] = 1;
-                len++;
-            }
-            else
-            {
-                j--;
-                break;
-            }
+            len = len > (r-l+1) ? len : (r-l+1);
         }
-        longest = len > longest ? len : longest;
-        i = j;
+        else
+        {
+            if (hash[s[r]] < l)
+                len = len > (r-l+1) ? len : (r-l+1);
+            else
+                l = hash[s[r]] + 1;
+        }
+        hash[s[r]] = r;
     }
-    return longest;
+    return len;
 }
 
 int main()
